@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	xsi:schemaLocation="urn:infinispan:config:5.1 http://www.infinispan.org/schemas/infinispan-config-5.1.xsd"
+
+	xmlns="urn:infinispan:config:5.1">
+
+	<global>
+	
+		 <globalJmxStatistics enabled="false" jmxDomain="infinispan"/>
+	
+	</global>
+
+	<default />
+
+	<namedCache name="StoreRepository">
+		<invocationBatching enabled="true"/>
+		<!-- disable jmx in prod -->
+		<jmxStatistics enabled="false"/>
+		<loaders passivation="false" shared="false" preload="false">		
+			  
+		       <loader class="org.infinispan.loaders.file.FileCacheStore" fetchPersistentState="false"
+	               ignoreModifications="false" purgeOnStartup="false">
+	               <properties>
+	                 <property name="location" value="./files/store"/>
+	               </properties>
+	          </loader>
+	          	
+			</loaders>
+		
+		    <eviction maxEntries="10" strategy="LRU"/>
+
+		<transaction
+			transactionManagerLookupClass="org.infinispan.transaction.lookup.DummyTransactionManagerLookup"
+			transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC" />
+
+	</namedCache>
+	
+	<namedCache name="FilesRepository">
+		 <invocationBatching enabled="true"/>
+		 <!-- disable jmx in prod -->
+		 <jmxStatistics enabled="true"/>
+	     <loaders passivation="false" shared="false" preload="false">
+	          <loader class="org.infinispan.loaders.file.FileCacheStore" fetchPersistentState="false"
+	               ignoreModifications="false" purgeOnStartup="false">
+	            <properties>
+	                 <property name="location" value="./files/repos"/>
+	               </properties>
+	          </loader>
+	     </loaders>
+	     
+	     <transaction
+
+			transactionManagerLookupClass="org.infinispan.transaction.lookup.DummyTransactionManagerLookup"
+			transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC" />
+	     
+	</namedCache>
+	
+	
+
+</infinispan>
+
