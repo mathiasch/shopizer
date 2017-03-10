@@ -2,7 +2,7 @@ Official Shopizer 2.0.4 (master)
 -------------------
 Java open source e-commerce software
 
-- Shopping cart!
+!- Shopping cart!
 - Catalogue
 - Search
 - Checkout
